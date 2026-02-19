@@ -627,7 +627,7 @@ class MMMUProDataset(MMMUDataset):
 class MUIRDataset(ImageMCQDataset):
 
     DATASET_URL = {
-        'MUIRBench': 'http://opencompass.openxxlab.com/utils/VLMEval/MUIRBench.tsv'
+        'MUIRBench': 'https://opencompass.openxlab.space/utils/VLMEval/MUIRBench.tsv'
     }
 
     DATASET_MD5 = {
