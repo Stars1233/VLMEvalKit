@@ -62,6 +62,7 @@ from .ost_bench import OSTDataset
 from .videommmu import VideoMMMU
 from .vsibench import VSIBench
 from .mvu_eval import MVUEval
+from .omtgbench import OMTGBench
 
 from .mmsi_video import MMSIVideoBench
 from .groundingme import GroundingME
@@ -250,7 +251,7 @@ VIDEO_DATASET = [
     QBench_Video, QBench_Video_MCQ, QBench_Video_VQA,
     Video_MMLU_CAP, Video_MMLU_QA,
     Video_Holmes, VCRBench, CGAVCounting, MMSIVideoBench,
-    EgoExoBench_MCQ, DREAM, VideoTT, VideoMMMU, VSIBench, MVUEval
+    EgoExoBench_MCQ, DREAM, VideoMMMU, VSIBench, MVUEval, OMTGBench
 
 ]
 
