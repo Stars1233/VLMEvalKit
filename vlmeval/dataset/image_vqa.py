@@ -9,7 +9,6 @@ from tqdm import tqdm
 from .image_base import ImageBaseDataset
 from .utils import build_judge, DEBUG_MESSAGE
 from ..smp import *
-from ..smp.file import get_intermediate_file_path, get_file_extension
 from ..utils import track_progress_rich
 
 
@@ -286,15 +285,16 @@ class VTCBench(ImageBaseDataset):
         # Concatenate all dataframes
         merged_data = pd.concat(all_dataframes, ignore_index=False)
 
+        '''
         # now data has schema:
         # index <class 'int'> 0
         # question <class 'str'> What are all the special magic numbers for 019cc30e-2da8-4162-b145-df514e17 and demonic-heaven mentioned in the provided text?
         # answer <class 'str'> ["9199619", "1202641"]
         # image <class 'list'> [/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAx...XMBiHGRwbbBzgefJ8knJJ9ydXdTQTU1NTQTU1NTQTU1NTQTU1NTQTU1NTQTU1NTQTU1NTQTU1NTQTU1NTQTU1NTQTU1NTQf/2Q==, ...]
         # category <class 'str'> Retrieval
+        '''  # noqa: E501
 
         return merged_data
-
 
     def build_prompt(self, line):
         if isinstance(line, int):
@@ -306,22 +306,21 @@ class VTCBench(ImageBaseDataset):
         category = line['category']
 
         if category == 'Reasoning':
-            prompt = 'Answer a question based on the above book snippet. Your answer should be short and based on either explicitly stated facts or strong, logical inferences. Return only the final answer with no additional explanation or reasoning. Question: ' + quesiton
+            prompt = 'Answer a question based on the above book snippet. Your answer should be short and based on either explicitly stated facts or strong, logical inferences. Return only the final answer with no additional explanation or reasoning. Question: ' + quesiton  # noqa: E501
         elif category == 'Retrieval':
-            prompt = 'Answer a question based on the above book snippet. Some special magic numbers are hidden within the following text. Make sure to memorizeit. I will quiz you about the numbers afterwards. Question: ' + quesiton
+            prompt = 'Answer a question based on the above book snippet. Some special magic numbers are hidden within the following text. Make sure to memorizeit. I will quiz you about the numbers afterwards. Question: ' + quesiton  # noqa: E501
         elif category == 'Memory':
-            prompt = 'Based on the above context, write an answer in the form of a short phrase for the following question. Answer with exact words from the context whenever possible. Question: '+ quesiton
+            prompt = 'Based on the above context, write an answer in the form of a short phrase for the following question. Answer with exact words from the context whenever possible. Question: ' + quesiton  # noqa: E501
         else:
             raise ValueError(f"Unknown category: {category}")
 
         msgs = []
         if isinstance(base64_list, list):
-            msgs.extend([dict(type='image', value='data:image/jpeg;base64,'+p) for p in base64_list])
+            msgs.extend([dict(type='image', value='data:image/jpeg;base64,' + p) for p in base64_list])
         else:
             msgs = [dict(type='image', value='data:image/jpeg;base64,' + base64_list)]
         msgs.append(dict(type='text', value=prompt))
         return msgs
-
 
     @classmethod
     def evaluate(self, eval_file, **judge_kwargs):
@@ -340,7 +339,6 @@ class VTCBench(ImageBaseDataset):
         score_file = get_intermediate_file_path(eval_file, f'_{model}_score')
         tmp_file_score = get_intermediate_file_path(eval_file, f'_{model}_score', 'pkl')
         nproc = judge_kwargs.pop('nproc', 4)
-
 
         if not osp.exists(score_file):
             data = load(eval_file)
@@ -368,11 +366,13 @@ class VTCBench(ImageBaseDataset):
                 scores = load(tmp_file_score)
                 for k, v in zip(indices, new_result):
                     assert k in scores
-                    assert scores[k]['score'] == v['score'] and scores[k]['category'] == v['category'] and scores[k]['calc_metric'] == v['calc_metric']
+                    assert scores[k]['score'] == v['score'] and scores[k]['category'] == v['category'] and scores[k]['calc_metric'] == v['calc_metric']  # noqa: E501
 
             data['score'] = [scores[idx]['score'] for idx in data['index']]
             data['category'] = [scores[idx]['category'] for idx in data['index']]
-            data['calc_metric'] = [scores[idx]['calc_metric'] for idx in data['index']]
+            data['calc_metric'] = [
+                scores[idx]['calc_metric'] for idx in data['index']
+            ]
 
             dump(data, score_file)
 
@@ -413,7 +413,6 @@ class VTCBench(ImageBaseDataset):
         dump(ret, result_file)
         return ret
 
-
     @classmethod
     def get_scores(self, eval_file, **judge_kwargs):
         from .utils.vtcbench import process_vtc_line
@@ -450,7 +449,6 @@ class VTCBench(ImageBaseDataset):
 
                 category_scores[category] += score
                 category_counts[category] += 1
-
 
             ret = dict()
 

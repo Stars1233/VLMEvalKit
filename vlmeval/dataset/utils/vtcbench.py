@@ -4,6 +4,7 @@ from .verifier import QUESTION_QUALITY_PROMPT_EN_NO_COT
 from rouge_score import rouge_scorer
 from typing import Literal
 
+
 def calc_vtc_metrics(
     response: str,
     gold_answers: list[str],
@@ -105,10 +106,8 @@ def process_vtc_line(line):
     return ret
 
 
-FAIL_MSG = 'Failed to obtain answer via API.'
 def gpt_eval_vtcbemch(model, line):
     retry = 5
-    log = ''
     ret = {}
 
     if istype(line['answer'], list):
@@ -132,8 +131,9 @@ def gpt_eval_vtcbemch(model, line):
         ret['category'] = category
         ret['calc_metric'] = metric[0]
         return ret
-    elif category == 'Memory': # use gpt to judge the quality of the response in memory category
-        prompt = QUESTION_QUALITY_PROMPT_EN_NO_COT.format(question=line['question'], gold_answer=answers, llm_response=response)
+    elif category == 'Memory':  # use gpt to judge the quality of the response in memory category
+        prompt = QUESTION_QUALITY_PROMPT_EN_NO_COT.format(
+            question=line['question'], gold_answer=answers, llm_response=response)
 
         retry = 5
         ret['calc_metric'] = 'gpt_judge'
