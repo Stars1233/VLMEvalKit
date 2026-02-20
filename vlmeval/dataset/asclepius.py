@@ -1,3 +1,4 @@
+import re
 import pandas as pd
 import numpy as np
 
@@ -190,10 +191,7 @@ class Asclepius(ImageVQADataset):
         return ret
 
     @staticmethod
-    def _evaluate_single(inputs):
-        import re
-
-        model, line = inputs
+    def _evaluate_single(model, line):
         question = line.get('question', '')
         answer = str(line.get('answer', ''))
         prediction = str(line.get('prediction', ''))
