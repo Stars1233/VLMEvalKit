@@ -113,7 +113,8 @@ class GCPVertexAPI(BaseAPI):
             self._client = None
 
         self.logger.info(
-            f"GCPVertexAPI: model={self.model}, project={self.project_id}, location={self.location} ({'Claude' if self._is_claude else 'Gemini'})"
+            f"GCPVertexAPI: model={self.model}, project={self.project_id}, "
+            f"location={self.location} ({'Claude' if self._is_claude else 'Gemini'})"
         )
 
     def _build_gemini_contents(self, inputs):
