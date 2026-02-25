@@ -109,6 +109,7 @@ from .macbench import MaCBench
 from .mmesci import MMESCIDataset
 from .sarena_mini import SArena_MINI
 from .uni_svg import UniSVG
+from .chartcap import ChartCapDataset
 from .asclepius import Asclepius
 
 
@@ -241,7 +242,7 @@ IMAGE_DATASET = [
     MedqbenchPairedDescriptionDataset, MedqbenchCaptionDataset, ChartMuseum, ChartQAPro, ReasonMap_Plus,
     olmOCRBench, OceanOCRBench, MATBench, VLRMBench, RefCOCODataset, SimpleVQA, HiPhODataset, MaCBench,
     UniSVG, SArena_MINI, VLMsAreBiased, MMESCIDataset, CoreCognition, GroundingME,
-    FoxBench, VTCBench, Asclepius, PlotQA, ChartX
+    FoxBench, VTCBench, Asclepius, PlotQA, ChartX, ChartCapDataset
 ]
 
 VIDEO_DATASET = [
