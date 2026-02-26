@@ -111,6 +111,7 @@ from .macbench import MaCBench
 from .mmesci import MMESCIDataset
 from .sarena_mini import SArena_MINI
 from .uni_svg import UniSVG
+from .vladbench import VLADBench
 from .design2code import Design2Code
 from .chartcap import ChartCapDataset
 from .asclepius import Asclepius
@@ -246,7 +247,7 @@ IMAGE_DATASET = [
     olmOCRBench, OceanOCRBench, MATBench, VLRMBench, RefCOCODataset, SimpleVQA, HiPhODataset, MaCBench,
     UniSVG, SArena_MINI, VLMsAreBiased, MMESCIDataset, CoreCognition, GroundingME,
     FoxBench, VTCBench, Asclepius, PlotQA, ChartX, ChartCapDataset, WorldVQA, PuzzleVQA, VisualPuzzles,
-    Design2Code
+    Design2Code, VLADBench
 ]
 
 VIDEO_DATASET = [
